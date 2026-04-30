@@ -90,9 +90,9 @@ export default function AnalyzePage() {
       <Navbar />
 
       <main className="flex-1 pt-24 pb-16 px-6 flex items-center justify-center min-h-[calc(100vh-64px)] print-container">
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-3xl">
           {/* Header */}
-          <div className="text-center mb-10 no-print">
+          <div className="text-center mb-12 no-print">
             <h1 className="text-3xl font-semibold text-[var(--foreground)] mb-3">
               {result ? "Dream Analysis Report" : "Analyze Your Dream"}
             </h1>
@@ -189,72 +189,78 @@ export default function AnalyzePage() {
                 </blockquote>
               </div>
 
-              {/* Analysis Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {/* Analysis Stack */}
+              <div className="flex flex-col gap-10 mb-12">
                 {/* Islamic Perspective Section */}
-                <div className="flex flex-col h-full bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm report-card">
-                  <div className="bg-[var(--primary)] p-4 text-white flex items-center justify-between">
-                    <h3 className="font-semibold flex items-center gap-2 text-lg">
-                      🌙 Islamic Tradition
+                <div className="flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm report-card">
+                  <div className="bg-[var(--primary)] p-5 text-white flex items-center justify-between">
+                    <h3 className="font-semibold flex items-center gap-3 text-xl">
+                      🌙 Islamic Scholarly Tradition
                     </h3>
-                    <span className="text-xs bg-white/20 px-2 py-1 rounded-full">Scholarly Lens</span>
+                    <span className="text-xs bg-white/20 px-3 py-1 rounded-full uppercase tracking-widest font-bold">Traditional Lens</span>
                   </div>
-                  <div className="p-6 sm:p-8 flex-1 flex flex-col">
-                    <div className="mb-6 flex-1">
-                      <p className="text-[var(--foreground)] leading-relaxed mb-6 whitespace-pre-wrap">
+                  <div className="p-8 sm:p-10">
+                    <div className="mb-8">
+                      <p className="text-[var(--foreground)] text-lg leading-relaxed mb-8 whitespace-pre-wrap">
                         {result.islamic_interpretation.summary}
                       </p>
                       
-                      <div className="space-y-4">
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-subtle)]">Key Symbols Identified</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {result.islamic_interpretation.symbols?.map((s: string, i: number) => (
-                            <span key={i} className="px-3 py-1 bg-[var(--surface-muted)] border border-[var(--border)] rounded-full text-xs text-[var(--primary)] font-medium">
-                              {s}
-                            </span>
-                          ))}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-subtle)]">Key Symbols Identified</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {result.islamic_interpretation.symbols?.map((s: string, i: number) => (
+                              <span key={i} className="px-4 py-1.5 bg-[var(--surface-muted)] border border-[var(--border)] rounded-full text-xs text-[var(--primary)] font-bold">
+                                {s}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-subtle)]">Scholarly Notes</h4>
+                          <p className="text-sm text-[var(--text-muted)] leading-relaxed italic">
+                            {result.islamic_interpretation.notes}
+                          </p>
                         </div>
                       </div>
-                    </div>
-                    
-                    <div className="pt-6 border-t border-[var(--border)] mt-auto">
-                      <p className="text-sm text-[var(--text-muted)] leading-relaxed italic">
-                        {result.islamic_interpretation.notes}
-                      </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Scientific Perspective Section */}
-                <div className="flex flex-col h-full bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm report-card">
-                  <div className="bg-[var(--accent)] p-4 text-white flex items-center justify-between">
-                    <h3 className="font-semibold flex items-center gap-2 text-lg">
-                      🧠 Scientific Analysis
+                <div className="flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-sm report-card">
+                  <div className="bg-[var(--accent)] p-5 text-white flex items-center justify-between">
+                    <h3 className="font-semibold flex items-center gap-3 text-xl">
+                      🧠 Scientific & Psychological Lens
                     </h3>
-                    <span className="text-xs bg-white/20 px-2 py-1 rounded-full">Psychological Lens</span>
+                    <span className="text-xs bg-white/20 px-3 py-1 rounded-full uppercase tracking-widest font-bold">Modern Lens</span>
                   </div>
-                  <div className="p-6 sm:p-8 flex-1 flex flex-col">
-                    <div className="mb-6 flex-1">
-                      <p className="text-[var(--foreground)] leading-relaxed mb-6 whitespace-pre-wrap">
+                  <div className="p-8 sm:p-10">
+                    <div className="mb-8">
+                      <p className="text-[var(--foreground)] text-lg leading-relaxed mb-8 whitespace-pre-wrap">
                         {result.scientific_explanation.summary}
                       </p>
                       
-                      <div className="space-y-4">
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-subtle)]">Psychological Factors</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {result.scientific_explanation.psychological_factors?.map((f: string, i: number) => (
-                            <span key={i} className="px-3 py-1 bg-[var(--surface-muted)] border border-[var(--border)] rounded-full text-xs text-[var(--accent)] font-medium">
-                              {f}
-                            </span>
-                          ))}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-subtle)]">Psychological Factors</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {result.scientific_explanation.psychological_factors?.map((f: string, i: number) => (
+                              <span key={i} className="px-4 py-1.5 bg-[var(--surface-muted)] border border-[var(--border)] rounded-full text-xs text-[var(--accent)] font-bold">
+                                {f}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="space-y-4">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-subtle)]">Analytical Notes</h4>
+                          <p className="text-sm text-[var(--text-muted)] leading-relaxed italic">
+                            {result.scientific_explanation.notes}
+                          </p>
                         </div>
                       </div>
-                    </div>
-                    
-                    <div className="pt-6 border-t border-[var(--border)] mt-auto">
-                      <p className="text-sm text-[var(--text-muted)] leading-relaxed italic">
-                        {result.scientific_explanation.notes}
-                      </p>
                     </div>
                   </div>
                 </div>

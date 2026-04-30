@@ -105,8 +105,12 @@ export async function GET(req: Request) {
     `;
 
     // Convert to PDF using wkhtmltopdf
-    // We return a stream to be efficient
-    const pdfStream = wkhtmltopdf(html, {
+    // We explicitly set the command path if provided in .env
+    if (process.env.WKHTMLTOPDF_PATH) {
+      wkhtmltopdf.command = process.env.WKHTMLTOPDF_PATH;
+    }
+
+    const nodeStream = wkhtmltopdf(html, {
       pageSize: 'A4',
       marginTop: '10mm',
       marginBottom: '10mm',
@@ -115,9 +119,24 @@ export async function GET(req: Request) {
       encoding: 'UTF-8'
     });
 
-    // In Next.js App Router, we need to convert the stream to a Response
-    // Since wkhtmltopdf returns a Node stream, we can use it as a BodyInit
-    return new Response(pdfStream as any, {
+    // Handle potential spawn errors (like binary not found)
+    nodeStream.on('error', (err) => {
+      console.error('wkhtmltopdf spawn error:', err);
+    });
+
+    // Convert Node.js Readable stream to Web ReadableStream for Next.js Response
+    const webStream = new ReadableStream({
+      start(controller) {
+        nodeStream.on('data', (chunk) => controller.enqueue(chunk));
+        nodeStream.on('end', () => controller.close());
+        nodeStream.on('error', (err) => controller.error(err));
+      },
+      cancel() {
+        nodeStream.destroy();
+      }
+    });
+
+    return new Response(webStream, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="Ruya_Report_${requestId}.pdf"`,
