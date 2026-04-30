@@ -87,3 +87,9 @@ html {
     color: #4a3f30 !important;
   }
 }
+
+/* Typing cursor blink animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
